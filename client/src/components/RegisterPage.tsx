@@ -78,7 +78,7 @@ export default function RegisterPage(props: { disableCustomTheme?: boolean }) {
       password: data.get('password'),
     });
         
-    const response = await fetch("/api/register", {
+    const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: data.get('username'), password: data.get('password') })
@@ -88,7 +88,7 @@ export default function RegisterPage(props: { disableCustomTheme?: boolean }) {
       return; 
     }
     
-    const loginResponse = await fetch("/api/login", {
+    const loginResponse = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: data.get('username'), password: data.get('password') })

@@ -205,8 +205,6 @@ function BoardPage() {
   useEffect(() => {
     async function fetchBoard(boardId: string) {
       try {
-        // Get tokena and board id
-        // const token = localStorage.getItem("token");
         
         // Fetch user boards
         const response = await fetch(`/api/user/boards/${boardId}/cards`, {
@@ -347,61 +345,6 @@ function BoardPage() {
       </DndContext>
     </Stack>
   )
-  // return (
-  //   <Stack direction='column' sx={{overflow: "hidden",
-  //     width: "100%", height: '100%', boxSizing:"border-box", 
-  //     paddingLeft: "2rem", paddingRight: "2rem"
-  //   }}>
-  //     {/* Tools */}
-  //     <BoardToolbar board={board} addColumn={postColumn} renameBoard={(name: string) => board ? updateBoard({ ...board, name: name }) : {}}/>
-  //     {/* Board area */}
-  //     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>        
-  //       <Box sx={{overflowX: "auto", overflowY: "auto", 
-  //         minWidth: "100%", minHeight: "fit-content", boxSizing: "border-box"
-  //       }}>
-  //         <Stack direction='row' sx={{
-  //           width: "max-content", height: "fit-content", boxSizing: "border-box",
-  //           border: "solid 1px", borderColor: "divider", borderRadius: "12px", marginBottom: "2rem"
-  //         }}>
-  //           { board && board.columns && board.columns.map((column) => (
-  //             <React.Fragment key={column._id}>
-  //               <Stack spacing={2} direction='column' boxSizing='border-box' sx={{ height: "100%", width: "400px", margin: "1rem"}}>
-  //                 {/* Column name and tools */}
-  //                 <Stack direction='row' justifyContent='space-between'>
-  //                   <EditableTextField text={column.name} textVariant="h3" editCallback={(newName: string) => updateColumn(column._id, newName)}/>
-  //                   <DropdownMenu>
-  //                     <MenuItem onClick={() => deleteColumn(column._id)}><DeleteIcon/>Delete Column</MenuItem>
-  //                   </DropdownMenu>
-  //                 </Stack>
-  //                 {/* Cards */}
-  //                 <SortableContext items={column.cards.map(card => card._id)} strategy={verticalListSortingStrategy}>
-  //                   {column.cards.map((card: ICard) => (
-  //                     <SortableColumnCard id={card._id} cardKey={card._id} card={card} 
-  //                       updateCard={ (updated: ICard) => updateCard(column._id, updated)} 
-  //                       deleteCard={ (deleted: ICard) => deleteCard(column._id, deleted._id)}
-  //                     />
-  //                   ))}
-  //                 </SortableContext>
-  //                 {/* Add new card button */}
-  //                 <IconButton size='large' onClick={() => postCard(column._id)} sx={{borderRadius: "8px", border: "solid 1px", borderColor: 'divider'}}>
-  //                   <AddIcon/>
-  //                   <Typography variant="h3">Add a card</Typography>
-  //                 </IconButton>
-  //               </Stack>
-  //               <Divider orientation="vertical" flexItem/>
-  //             </React.Fragment>
-  //           )) }
-  //           <Stack spacing="2" direction='column' sx={{height: "100%", width: "200px", margin: "1rem"}}>
-  //             <IconButton size='large' onClick={postColumn} sx={{borderRadius: "8px"}}>
-  //               <AddIcon sx={{color: 'text.primary'}}/>
-  //               <Typography variant="h3">Add a column</Typography>
-  //             </IconButton>
-  //           </Stack>
-  //         </Stack>
-  //       </Box>
-  //     </DndContext>
-  //   </Stack>
-  // )
 }
 
 export default BoardPage; 

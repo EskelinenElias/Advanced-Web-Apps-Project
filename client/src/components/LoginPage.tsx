@@ -79,7 +79,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean, nextPath?:
     }
     const data = new FormData(event.currentTarget);
     
-    const response = await fetch("/api/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: data.get('username'), password: data.get('password') })

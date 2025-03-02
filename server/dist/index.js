@@ -18,21 +18,26 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
 // Add routing
-app.use("/", routes_1.default);
+app.use("/api", routes_1.default);
 // Confifure Cross-Origin Resource Sharing (CORS)
 if (process.env.NODE_ENV === 'development') {
+    console.log("Running in development mode");
     const corsOptions = {
-        origin: 'http://localhost: 3000',
+        origin: 'http://localhost:3000',
         optionsSuccessStatus: 200
     };
     app.use((0, cors_1.default)(corsOptions));
 }
 else if (process.env.NODE_ENV === 'production') {
+    console.log("Running in production mode");
     // Serve static files from client/build
-    app.use(express_1.default.static(path_1.default.resolve('../..', 'client', 'build')));
+    app.use(express_1.default.static(path_1.default.resolve('..', 'client', 'dist')));
     app.get('*', (req, res) => {
-        res.sendFile(path_1.default.resolve('../..', 'client', 'build', 'index.html'));
+        res.sendFile(path_1.default.resolve('..', 'client', 'dist', 'index.html'));
     });
+}
+else {
+    console.log("Running in other mode", process.env.NODE_ENV);
 }
 // Configure server settings
 const host = "127.0.0.1";

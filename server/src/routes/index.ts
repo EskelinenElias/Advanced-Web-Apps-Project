@@ -10,7 +10,7 @@ import combinationRoutes from './combinationRoutes';
 const router = Router();
 
 // Add routes
-router.use("/", authRoutes); 
+router.use("/auth", authRoutes); 
 router.use("/user", boardRoutes); 
 router.use("/user", columnRoutes)
 router.use("/user", cardRoutes)

@@ -13,7 +13,7 @@ const combinationRoutes_1 = __importDefault(require("./combinationRoutes"));
 // Create router
 const router = (0, express_1.Router)();
 // Add routes
-router.use("/", authRoutes_1.default);
+router.use("/auth", authRoutes_1.default);
 router.use("/user", boardRoutes_1.default);
 router.use("/user", columnRoutes_1.default);
 router.use("/user", cardRoutes_1.default);
