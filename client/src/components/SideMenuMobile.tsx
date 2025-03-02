@@ -73,6 +73,7 @@ function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
           <Button onClick={ logout } variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout
           </Button>
+          <Typography>{"Copyright ©️ Elias Eskelinen 2025"}</Typography>
         </Stack>
       </Stack>
     </Drawer>
