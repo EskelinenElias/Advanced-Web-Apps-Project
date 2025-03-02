@@ -25,7 +25,7 @@ interface SortableColumnProps {
 function SortableColumn(props: SortableColumnProps) {
   const { column, moveLeft, moveRight, updateColumn, deleteColumn, postCard, updateCard, deleteCard } = props; 
   return (
-    <Stack spacing={2} direction="column" boxSizing="border-box" sx={{ height: "100%", width: "400px", margin: "1rem" }}>
+    <Stack spacing={2} direction="column" boxSizing="border-box" sx={{ height: "100%", width: {xs: "65dvw", sm: "55dvw", md:"45dvw", lg:"35dvw", xl: "25dvw"}, margin: "1rem" }}>
       {/* Column title */}
       <Stack direction="row" justifyContent="space-between">
         <EditableTextField text={column.name} textVariant="h3" editCallback={(newName) => updateColumn({ ...column, name: newName })} />

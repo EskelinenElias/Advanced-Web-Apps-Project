@@ -61,12 +61,6 @@ function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
     navigate('/login')
   }  
   
-  function handleBoardClick(board: IBoard) {
-    if (board) {
-      navigate(`/boards/${board._id}`); 
-    }
-  }
-  
   return (
     <Drawer
       anchor="left"

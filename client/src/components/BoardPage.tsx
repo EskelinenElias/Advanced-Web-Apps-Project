@@ -336,7 +336,7 @@ function BoardPage() {
             ))}
             
             {/* Add column button */}
-            <Stack spacing="2" direction="column" sx={{ height: "100%", width: "200px", margin: "1rem" }}>
+            <Stack spacing="2" direction="column" sx={{ height: "100%", width: "10dvw", margin: "1rem" }}>
               <IconButton size="large" onClick={postColumn} sx={{ borderRadius: "8px" }}>
                 <AddIcon sx={{ color: "text.primary" }} />
                 <Typography variant="h3">Add a column</Typography>
