@@ -1,3 +1,5 @@
+// Source: https://github.com/mui/material-ui/tree/v6.4.6/docs/data/material/getting-started/templates
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,10 +12,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-//import ForgotPassword from './components/ForgotPassword';
 import AppTheme from '../theme/AppTheme';
 import UserRoundedIcon from "@mui/icons-material/SettingsRounded";
-//import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons'; 
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Link } from '@mui/material';
 

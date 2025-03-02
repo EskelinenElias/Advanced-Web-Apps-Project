@@ -42,7 +42,9 @@ async function updateBoard(req, res) {
         if (users) {
             board.users = users.some((id) => id.toString() === userId.toString()) ? users : board.users;
         }
-        board.columns = columns.map((column) => column._id);
+        if (columns.lenght > 0) {
+            board.columns = columns.map((column) => column._id);
+        }
         await board.save();
         // Success: board updated
         res.status(200).json({ message: "Success", board: board });

@@ -10,8 +10,6 @@ import BoardPage from './components/BoardPage';
 import WelcomePage from './components/WelcomePage';
 import verifyToken from './auth/verifyToken';
 
-
-
 function ProtectedRoute(props: { children: ReactElement, deniedRoute: ReactElement }) {
   const { children, deniedRoute } = props; 
   
@@ -20,6 +18,7 @@ function ProtectedRoute(props: { children: ReactElement, deniedRoute: ReactEleme
 };
 
 function App() {
+
   return (
     <AppTheme>
       <BrowserRouter>

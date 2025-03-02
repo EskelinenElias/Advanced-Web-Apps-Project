@@ -1,9 +1,9 @@
+// Source: https://github.com/mui/material-ui/tree/v6.4.6/docs/data/material/getting-started/templates
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
@@ -12,12 +12,9 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-//import ForgotPassword from './components/ForgotPassword';
 import AppTheme from '../theme/AppTheme';
-import ColorModeSelect from '../theme/ColorModeSelect';
 import UserRoundedIcon from "@mui/icons-material/SettingsRounded";
-//import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons'; 
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -61,22 +58,16 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+export default function RegisterPage(props: { disableCustomTheme?: boolean }) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');  
+  
+  const navigate = useNavigate(); 
 
-  const handleClickOpen = () => {
-    // setOpen(true);
-  };
-
-  const handleClose = () => {
-  //   setOpen(false);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (emailError || passwordError) {
       event.preventDefault();
       return;
@@ -86,15 +77,41 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       email: data.get('email'),
       password: data.get('password'),
     });
+        
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: data.get('username'), password: data.get('password') })
+    })
+    if (!response.ok) {
+      console.log(response)
+      return; 
+    }
+    
+    const loginResponse = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: data.get('username'), password: data.get('password') })
+    })
+    if (!loginResponse.ok) {
+      console.log(response)
+      return; 
+    }
+    const credentials = await loginResponse.json(); 
+    
+    localStorage.setItem("token", credentials.token)    
+    
+    navigate('/boards')
   };
 
   const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
+    const username = document.getElementById('username') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
+    const passwordAgain = document.getElementById('passwordAgain') as HTMLInputElement;
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!username.value) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address.');
       isValid = false;
@@ -110,6 +127,22 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     } else {
       setPasswordError(false);
       setPasswordErrorMessage('');
+    }
+    
+    if (!passwordAgain.value || passwordAgain.value.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
+    }
+    
+    if (password.value !== passwordAgain.value) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Passwords do not match');
+      console.log(password, passwordAgain)
+      //alert("Passwords do not match")
     }
 
     return isValid;
@@ -166,6 +199,23 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 placeholder="••••••••"
                 type="password"
                 id="password"
+                autoComplete="current-password"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+                color={passwordError ? 'error' : 'primary'}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="passwordAgain">Type the password again</FormLabel>
+              <TextField
+                error={passwordError}
+                helperText={passwordErrorMessage}
+                name="passwordAgain"
+                placeholder="••••••••"
+                type="password"
+                id="passwordAgain"
                 autoComplete="current-password"
                 autoFocus
                 required

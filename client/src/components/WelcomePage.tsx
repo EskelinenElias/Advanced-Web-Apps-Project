@@ -1,10 +1,12 @@
 import {  Typography, Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import verifyToken from "../auth/verifyToken";
 
 function WelcomePage() {
   
   const navigate = useNavigate();
   
+  if (verifyToken()) navigate('/boards')
   return (
     <Stack direction='row' justifyContent='center' alignItems="center" sx={{
       width: "100%", height: '100%', boxSizing: "border-box",

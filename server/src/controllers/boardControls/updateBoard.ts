@@ -54,7 +54,9 @@ async function updateBoard(req: CustomRequest, res: Response) {
     if (users) {
       board.users = users.some((id: string) => id.toString() === userId.toString()) ? users : board.users;
     }
-    board.columns = columns.map((column: IColumn) => column._id); 
+    if (columns.lenght > 0) {
+      board.columns = columns.map((column: IColumn) => column._id); 
+    }
     await board.save();
     
     // Success: board updated

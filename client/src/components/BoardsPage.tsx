@@ -8,6 +8,8 @@ import verifyToken from "../auth/verifyToken";
 import DropdownMenu from "./DropdownMenu";
 import {MenuItem} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CollabMenu from "./CollabMenu";
+import EditableTextField from "./EditableTextField";
   
 function OverviewToolbar({ newBoard }: { newBoard: () => void}) {
   return (
@@ -24,18 +26,32 @@ function OverviewToolbar({ newBoard }: { newBoard: () => void}) {
 }
 
 function Board(props: {board: IBoard, onClick: () => void, deleteBoard: () => void}) {
-  
-  
   const { board, onClick, deleteBoard } = props; 
-  return (
+  const [name, setName] = useState<string>(board.name); 
+  // Function to update board name
+  async function updateBoard(newName: string) {
+    if (board) { 
+      setName(newName); 
+      const token = localStorage.getItem('token'); 
+      const response = await fetch(`/api/user/boards/${board._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ ...board, name: newName, columns: [] })
+      })
+      if (!response.ok) console.log("Could not update board name", name)
+    }
+  }  return (
     <Card key={board._id}>
+      <CardContent>
+        <EditableTextField text={board.name} editCallback={updateBoard} />
+      </CardContent>
       <CardContent onClick={onClick}>
-        <Typography variant="h3">{board.name}</Typography>
-        {/* <Typography variant="body1">{`Columns: ${board.columns.length}`}</Typography>
-        <Typography variant="body1">{`Users: ${board.users.length}`}</Typography> */}
+        <Typography variant="body1">{`Columns: ${board.columns.length}`}</Typography>
+        <Typography variant="body1">{`Users: ${board.users.length}`}</Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "right" }}>
         {/* More Actions Button and Dropdown Menu */}
+        <CollabMenu board={board}/>
         <DropdownMenu>
           {/* Delete Board Button */}
           <MenuItem onClick={deleteBoard}><DeleteIcon />Delete Board</MenuItem>
@@ -128,14 +144,14 @@ function BoardsPage() {
   
   return (
     <Stack direction='column' sx={{width: "100%", height: '100%', boxSizing: "border-box", 
-      paddingLeft: "2rem", paddingRight: "2rem"
+      paddingLeft: {xs: "1rem", md: "2rem"}, paddingRight: {xs: "1rem", md: "2rem"}
     }}>
       {/* Breadcrumbs and tools */}
       <OverviewToolbar newBoard={postNewBoard}/>
       {/* Board grid */}
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container spacing={2} columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}>
         {boards && boards.map((board, index) => (
-          <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
+          <Grid key={index} size={{ xs: 1, sm: 1, md: 2 }}>
             <Board board={board} onClick={() => navigate(`/boards/${board._id}`)} deleteBoard={() => deleteBoard(board)}/>
           </Grid>
         ))}

@@ -1,6 +1,5 @@
 // Source: https://github.com/mui/material-ui/tree/v6.4.6/docs/data/material/getting-started/templates/dashboard
 
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -8,11 +7,8 @@ import Drawer, { drawerClasses } from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-import MenuButton from './MenuButton';
-import MenuContent from './MenuContent';
-import CardAlert from './CardAlert';
 import {  useNavigate } from 'react-router-dom';
+import getUsername from '../auth/getUsername';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
@@ -21,6 +17,7 @@ interface SideMenuMobileProps {
 
 function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
   const navigate = useNavigate();
+  const username = getUsername(); 
   
   // Function to logout
   function logout() {
@@ -43,6 +40,7 @@ function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
     >
       <Stack
         sx={{
+          minWidth: '20dvw',
           maxWidth: '70dvw',
           height: '100%',
         }}
@@ -54,24 +52,23 @@ function SideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
           >
             <Avatar
               sizes="small"
-              alt="Riley Carter"
+              alt={username}
               src="/static/images/avatar/7.jpg"
               sx={{ width: 24, height: 24 }}
             />
             <Typography component="p" variant="h6">
-              Riley Carter
+              {username}
             </Typography>
           </Stack>
-          <MenuButton showBadge>
+          {/* <MenuButton showBadge>
             <NotificationsRoundedIcon />
-          </MenuButton>
+          </MenuButton> */}
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent />
           <Divider />
         </Stack>
-        <CardAlert />
+        {/* <CardAlert /> */}
         <Stack sx={{ p: 2 }}>
           <Button onClick={ logout } variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout

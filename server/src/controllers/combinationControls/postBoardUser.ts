@@ -43,6 +43,7 @@ async function postBoardUsers(req: CustomRequest, res: Response) {
     }
     
     // Find the new user 
+    console.log(`Adding user ${newUsername}...`)
     const newUser: IUser|null = await User.findOne({ username: newUsername }); 
     if (!newUser) {
       

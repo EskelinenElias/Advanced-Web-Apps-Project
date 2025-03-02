@@ -1,6 +1,4 @@
 // Source: https://github.com/mui/material-ui/tree/v6.4.6/docs/data/material/getting-started/templates/dashboard
-
-import * as React from 'react';
 import { useColorScheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectProps } from '@mui/material/Select';

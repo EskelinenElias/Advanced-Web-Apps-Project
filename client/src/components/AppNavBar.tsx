@@ -2,11 +2,12 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import MenuIcon from '@mui/icons-material/Menu';
 import SideMenuMobile from './SideMenuMobile';
 import verifyToken from '../auth/verifyToken';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link } from '@mui/material';
+import { Link , Stack} from '@mui/material';
+import ColorModeSelect from '../theme/ColorModeSelect';
 
 
 function MenuButtonOutlined({onClick}: {onClick: () => void}) {
@@ -17,7 +18,7 @@ function MenuButtonOutlined({onClick}: {onClick: () => void}) {
       borderColor: 'divider',
       borderRadius: '12px'
     }}>
-      <MenuRoundedIcon />
+      <MenuIcon sx={{color: 'text.primary'}} />
     </IconButton>
   )
 }
@@ -57,22 +58,27 @@ export default function AppNavBar() {
       //   color: theme().colors.font
       // }}>
       >
-        <SideMenuMobile open={open} toggleDrawer={toggleDrawer} />
-      <Toolbar sx={{ justifyContent: 'left' }}>
-          {/* Menu button */}
-          <MenuButtonOutlined onClick={toggleDrawer(true)} />
-          {/* Logo or name */}
-          <Link underline="always" variant="h3" component={RouterLink} 
-            to={verifyToken() ? '/boards' : '/'}
-          >
-              CardBoard
-          </Link>
+      <SideMenuMobile open={open} toggleDrawer={toggleDrawer} />
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Stack direction='row' justifyContent='left' alignItems='center' sx={{
+            background: 'none'
+          }}>
+            {/* Menu button */}
+            <MenuButtonOutlined onClick={toggleDrawer(true)} />
+            {/* Logo or name */}
+            <Link underline="always" variant="h3" component={RouterLink} 
+              to={verifyToken() ? '/boards' : '/'}
+            >
+                CardBoard
+            </Link>
+          </Stack>
           {/* <Typography onClick={ handleLogoClick } variant="h3" component="div" sx={{ flexGrow: 1 }}>CardBoard</Typography> */}
           {/* Home button 
           <Button color="inherit" component={RouterLink} to="/">Home</Button>
           {/* Saved button 
           <Button color="inherit" component={RouterLink} to="/about">Saved</Button>
           */}
+          <ColorModeSelect/>
         </Toolbar>
       </AppBar >
     // </Box>

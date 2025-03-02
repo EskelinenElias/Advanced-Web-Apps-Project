@@ -4,6 +4,7 @@ import getBoardColumns from "../controllers/combinationControls/getBoardColumns"
 import getBoardColumnsCards from "../controllers/combinationControls/getBoardColumnsCards";
 import getColumnCards from "../controllers/combinationControls/getColumnCards";
 import getBoardUsers from "../controllers/combinationControls/getBoardUsers";
+import postBoardUsers from "../controllers/combinationControls/postBoardUser";
 
 const router = Router();
 
@@ -18,5 +19,8 @@ router.get('/boards/:boardId/columns/:columnId/cards', authenticate, getColumnCa
 
 // GET route to get board user's usernames
 router.get('/boards/:boardId/users', authenticate, getBoardUsers); 
+
+// POST route to add a user to board 
+router.post('/boards/:boardId/users/:newUsername', authenticate, postBoardUsers); 
 
 export default router; 

@@ -35,6 +35,7 @@ async function postBoardUsers(req, res) {
             return;
         }
         // Find the new user 
+        console.log(`Adding user ${newUsername}...`);
         const newUser = await user_1.User.findOne({ username: newUsername });
         if (!newUser) {
             // Failure: user not found
