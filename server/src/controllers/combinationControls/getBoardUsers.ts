@@ -1,0 +1,68 @@
+import { Response } from "express";
+import { CustomRequest } from "../../middleware/auth";
+import { IUser } from "../../models/user"; 
+import { Board } from "../../models/board";
+
+// Function to get a board by id
+async function getBoardUsers(req: CustomRequest, res: Response) {
+  try {
+    
+    // Validate the request
+    if (!req.user || !req.user._id || !req.user.username) {
+      console.error("Invalid request: invalid user data", req.user); 
+      res.status(400).json({ message: 'Invalid request' }); 
+      return; 
+    }
+    if (!req.params) {
+      console.error("Invalid request: can't GET board, board id not provided", req.params); 
+      res.status(400).json({ message: 'Invalid request' }); 
+      return; 
+    }
+    
+    // Parse the request
+    const boardId = req.params.boardId;  
+    const userId = req.user._id;
+    console.log("Getting board", boardId, "user", userId)
+    
+    // Find board by board id
+    const board = await Board.findOne({ _id: boardId });
+    if (!board) {
+      
+      // Failure: board not found
+      console.log(`Board ${boardId} not found.`); 
+      res.status(404).json({ message: "Board not found" }); 
+      return; 
+    }
+    
+    console.log("Board", board)
+    
+    // Board found; check that the user can access the board
+    if (!(board.users.some((id) => id.toString() === userId))) {
+      
+      // Failure: user has no rights to access board
+      console.log(`User has no rights to access board`); 
+      res.status(403).json({ message: "Can't access board" }); 
+      return; 
+    }
+    
+    // User can access board; populate the board
+    await board.populate("users");
+    console.log(board)
+    
+    // Get board users
+    const usernames = board.users.map((user: IUser) => user.username); 
+    
+    // Success: return usernames
+    res.status(200).json({ users: usernames });
+    return; 
+    
+  } catch (error) {
+    
+    // Failure: unknown error
+    console.error("Error fetching user's boards:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+    return; 
+  }
+}
+
+export default getBoardUsers; 

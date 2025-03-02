@@ -1,0 +1,15 @@
+{
+  "name": "advanced-web-apps-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd client && npm install", 
+    "dev:client": "cd client && npm run dev", 
+    "preinstall": "cd server && npm install",
+    "dev:server": "cd server && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elias Eskelinen",
+  "license": "ISC",
+  "description": ""
+}
